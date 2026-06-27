@@ -1,0 +1,49 @@
+# 依赖包目录
+node_modules/
+__pycache__/
+*.pyc
+backend/libs/
+
+# 构建产物
+frontend/dist/
+frontend/.vite/
+backend/staticfiles/
+
+# 数据库文件
+*.sqlite3
+backend/db.sqlite3
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# IDE/编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# 日志文件
+*.log
+npm-debug.log*
+server.log
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 缓存文件
+.cache/
+.parcel-cache/
+
+# 媒体文件（上传的用户内容）
+backend/media/
+
+# Python 虚拟环境
+venv/
+env/
+ENV/
+.venv/

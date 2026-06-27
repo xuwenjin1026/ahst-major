@@ -1,0 +1,106 @@
+安徽科技工程大学高考专业推荐系统 - 本地运行指南
+=========================================
+
+由于沙盒环境限制，需要您在本地手动执行以下步骤来启动项目。
+
+
+一、环境准备
+-----------
+1. 安装 Python 3.9+
+2. 安装 Node.js 16+
+3. 安装 MySQL 8.0+（可选，已配置SQLite备用）
+
+
+二、后端启动
+-----------
+1. 打开命令行，进入后端目录：
+   cd d:\firstlove\11\backend
+
+2. 创建虚拟环境（推荐）：
+   python -m venv venv
+
+3. 激活虚拟环境：
+   - Windows: venv\Scripts\activate
+   - 或直接执行：venv\Scripts\activate.bat
+
+4. 安装依赖：
+   pip install Django==4.2.7 djangorestframework==3.14.0 django-cors-headers==4.3.1 python-dotenv==1.0.0
+
+5. 执行数据库迁移：
+   python manage.py makemigrations
+   python manage.py migrate
+
+6. 导入示例数据：
+   python ..\database\import_data.py
+
+7. 启动后端服务：
+   python manage.py runserver 8000
+
+
+三、前端启动
+-----------
+1. 新开命令行窗口，进入前端目录：
+   cd d:\firstlove\11\frontend
+
+2. 安装依赖：
+   npm install
+
+3. 启动前端服务：
+   npm run dev
+
+4. 浏览器访问：
+   http://localhost:3000
+
+
+四、快速启动脚本
+----------------
+如果上述步骤太复杂，可以尝试直接运行：
+
+Windows PowerShell:
+   # 后端
+   cd d:\firstlove\11\backend
+   pip install Django==4.2.7 djangorestframework==3.14.0 django-cors-headers==4.3.1 python-dotenv==1.0.0
+   python manage.py makemigrations
+   python manage.py migrate
+   python ..\database\import_data.py
+   python manage.py runserver 8000
+
+   # 前端（新窗口）
+   cd d:\firstlove\11\frontend
+   npm install
+   npm run dev
+
+
+五、使用MySQL（可选）
+-------------------
+如需使用MySQL：
+1. 创建数据库：
+   mysql -u root -p
+   CREATE DATABASE ahst_major_recommendation;
+   exit
+
+2. 设置环境变量：
+   set USE_SQLITE=False
+
+3. 确保MySQL服务正在运行
+
+
+六、常见问题
+-----------
+Q: pip安装失败？
+A: 使用管理员权限打开命令行，或使用虚拟环境
+
+Q: 前端npm install很慢？
+A: 可使用淘宝镜像：npm config set registry https://registry.npmmirror.com
+
+Q: 端口被占用？
+A: 更换端口：
+   - 后端: python manage.py runserver 8080
+   - 前端: 修改 vite.config.js 中的端口
+
+
+七、访问地址
+-----------
+- 前端页面: http://localhost:3000
+- 后端API: http://localhost:8000/api/
+- 管理后台: http://localhost:8000/admin/

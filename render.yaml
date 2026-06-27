@@ -1,0 +1,37 @@
+# Render.com 后端服务配置
+# 使用方法：
+# 1. 登录 render.com
+# 2. New -> Web Service
+# 3. 选择你的 GitHub 仓库
+# 4. 配置参数见下方（或使用 Blueprint: 导入此文件）
+
+services:
+  - type: web
+    name: ahst-major-backend
+    env: python
+    plan: free
+    branch: main
+    # 关键：不设置 rootDir，直接用完整路径访问文件
+    buildCommand: |
+      pip install --upgrade pip &&
+      pip install -r backend/requirements.txt &&
+      cd backend &&
+      python manage.py migrate --no-input &&
+      python manage.py collectstatic --no-input --clear &&
+      python ../database/import_data.py &&
+      python ../add_2024_2025_scores.py
+    startCommand: cd backend && gunicorn ahst_project.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: USE_SQLITE
+        value: "True"
+      - key: DJANGO_LOG_LEVEL
+        value: "INFO"
+    autoDeploy: yes
+    pullRequestPreviewsEnabled: no
+    healthCheckPath: /api/statistics/
